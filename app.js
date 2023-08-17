@@ -73,12 +73,6 @@ const imageMapping = {
     
                 container.appendChild(characterElement);
             });
-    
-            // Process and display characters as needed
-            // characters.forEach(character => {
-            //     console.log(character.name);
-                // Display other character information on your webpage
-            // });
         }
     }
     
