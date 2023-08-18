@@ -67,14 +67,29 @@ const imageMapping = {
                 const imageElement = document.createElement('img');
                 imageElement.src = imageMapping[character.id];
                 imageElement.alt = character.name;
-    
+
+                const heroPoster = document.createElement('div')
+                heroPoster.classList.add('hero__poster')
+
+                const heroPosterFill = document.createElement('span')
+                heroPosterFill.classList.add('hero__poster--fill')
+                heroPosterFill.appendChild(imageElement.cloneNode())
+                
+                const heroPosterFeatured = document.createElement('span')
+                heroPosterFeatured.classList.add('hero__poster--featured')
+                heroPosterFeatured.appendChild(imageElement.cloneNode())
+
+                //append everything in the character div
                 characterElement.appendChild(nameElement);
-                characterElement.appendChild(imageElement);
-    
-                container.appendChild(characterElement);
+                characterElement.appendChild(heroPoster)
+                heroPoster.appendChild(heroPosterFill)
+                heroPoster.appendChild(heroPosterFeatured)
+
+                container.appendChild(characterElement)
+
             });
         }
     }
     
-    // Call the function to start fetching and displaying characters
+    // call the function to start fetching and displaying characters
     displayCharacters();
