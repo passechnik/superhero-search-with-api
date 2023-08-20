@@ -35,17 +35,35 @@ const imageMapping = {
         const apiKey = '95d73441f5msh110af27d713bf7ep1564e0jsn21dbe9dede91';
         const apiUrl = `https://marvel-heroic-api-unlock-the-mcu-legendary-characters.p.rapidapi.com/characters?pageNo=${pageNo}`;
     
-        const response = await fetch(apiUrl, {
+        try { const response = await fetch(apiUrl, {
             method: 'GET',
             headers: {
                 'X-RapidAPI-Host': 'marvel-heroic-api-unlock-the-mcu-legendary-characters.p.rapidapi.com',
                 'X-RapidAPI-Key': apiKey
             }
         });
+
+        if (!response.ok) {
+            throw new Error('Service Unavailable');
+        }
     
         const data = await response.json();
+        // console.log(data)
         return data;
+
+    } catch (error) {
+        console.error('Error fetching characters:', error.message);
+        // hadle the error
+        const errorBlock = document.createElement('div')
+        errorBlock.classList.add('error')
+        errorBlock.innerText = 'Service is unavaible'
+        const container = document.getElementById('characters-container');
+        container.innerHTML = '';
+        container.appendChild(errorBlock)
+        return [];
+    
     }
+}
     
     async function displayCharacters() {
         const container = document.getElementById('characters-container');
@@ -71,6 +89,9 @@ const imageMapping = {
                 const heroPoster = document.createElement('div')
                 heroPoster.classList.add('hero__poster')
 
+                const heroDetails = document.createElement('div')
+                heroDetails.classList.add('hero__details')
+
                 const heroPosterFill = document.createElement('span')
                 heroPosterFill.classList.add('hero__poster--fill')
                 heroPosterFill.appendChild(imageElement.cloneNode())
@@ -80,8 +101,9 @@ const imageMapping = {
                 heroPosterFeatured.appendChild(imageElement.cloneNode())
 
                 //append everything in the character div
-                characterElement.appendChild(nameElement);
                 characterElement.appendChild(heroPoster)
+                characterElement.appendChild(heroDetails)
+                heroDetails.appendChild(nameElement)
                 heroPoster.appendChild(heroPosterFill)
                 heroPoster.appendChild(heroPosterFeatured)
 
